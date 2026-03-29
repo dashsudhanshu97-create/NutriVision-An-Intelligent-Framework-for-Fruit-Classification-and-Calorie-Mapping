@@ -1,3 +1,4 @@
+<pre>
 🍎 NutriVision: AI-Powered Fruit & Calorie Detection
 NutriVision is an intelligent Computer Vision application that identifies fruits and estimates their caloric content in real-time. By leveraging the YOLO object detection framework and a Flask backend, the system provides high-speed recognition and mapping to nutritional data through a seamless, modern web interface.
 ---
@@ -50,3 +51,4 @@ Backend: Flask (Python) for API handling.
 Frontend: Tailwind CSS & Vanilla JavaScript.
 
 Imaging: OpenCV & Pillow (PIL).
+</pre>
