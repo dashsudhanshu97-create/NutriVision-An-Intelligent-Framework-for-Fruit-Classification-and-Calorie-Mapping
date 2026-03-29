@@ -9,10 +9,10 @@ Follow these steps to get the project running on your local machine.
   
 2. Set Up a Virtual Environment
 Windows:
-
-Bash
+  
 python -m venv venv
 .\venv\Scripts\activate
+  
 Ubuntu/Linux:
 
 Bash
