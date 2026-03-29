@@ -1,7 +1,8 @@
-flask==3.0.0
-ultralytics==8.1.0
-opencv-python-headless==4.8.1.78
+flask
+gunicorn
+flask-cors
 numpy>=1.23,<2.0
-Pillow==10.0.1
-werkzeug==3.0.1
-importlib-metadata; python_version < "3.8"
+opencv-python-headless
+Pillow==9.5.0
+torch --index-url https://download.pytorch.org/whl/cpu
+ultralytics
