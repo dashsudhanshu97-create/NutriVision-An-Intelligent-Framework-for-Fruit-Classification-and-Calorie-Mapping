@@ -1,0 +1,600 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>FreshScan | AI-Powered Fruit Analysis</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@400;500;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              secondary: "#4f6443",
+              "secondary-fixed-dim": "#b6cea5",
+              "on-error-container": "#93000a",
+              "tertiary-container": "#cca730",
+              "primary-fixed": "#bcf0ae",
+              "surface-container-low": "#f5f3ef",
+              "surface-tint": "#3b6934",
+              "inverse-on-surface": "#f2f0ed",
+              "on-secondary-fixed": "#0e2006",
+              background: "#fbf9f5",
+              "inverse-primary": "#a1d494",
+              error: "#ba1a1a",
+              "on-secondary": "#ffffff",
+              "secondary-fixed": "#d2eac0",
+              "on-surface": "#1b1c1a",
+              "on-background": "#1b1c1a",
+              "on-tertiary-fixed-variant": "#574500",
+              "on-secondary-container": "#536947",
+              "on-primary-fixed": "#002201",
+              "tertiary-fixed-dim": "#e9c349",
+              "surface-container": "#efeeea",
+              surface: "#fbf9f5",
+              "on-primary-container": "#9dd090",
+              "surface-dim": "#dbdad6",
+              "tertiary-fixed": "#ffe088",
+              "outline-variant": "#c2c9bb",
+              "on-surface-variant": "#42493e",
+              "on-tertiary": "#ffffff",
+              "surface-variant": "#e4e2de",
+              "on-error": "#ffffff",
+              "error-container": "#ffdad6",
+              outline: "#72796e",
+              "surface-bright": "#fbf9f5",
+              "primary-fixed-dim": "#a1d494",
+              "secondary-container": "#cfe7bd",
+              "primary-container": "#2d5a27",
+              "on-primary-fixed-variant": "#23501e",
+              "inverse-surface": "#30312e",
+              primary: "#154212",
+              "surface-container-highest": "#e4e2de",
+              "surface-container-lowest": "#ffffff",
+              tertiary: "#735c00",
+              "on-secondary-fixed-variant": "#384c2d",
+              "on-primary": "#ffffff",
+              "surface-container-high": "#eae8e4",
+              "on-tertiary-container": "#4f3d00",
+              "on-tertiary-fixed": "#241a00",
+            },
+            fontFamily: {
+              headline: ["Noto Serif"],
+              body: ["Manrope"],
+              label: ["Manrope"],
+            },
+            borderRadius: {
+              DEFAULT: "1rem",
+              lg: "2rem",
+              xl: "3rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .glass-panel {
+        background: rgba(251, 249, 245, 0.7);
+        backdrop-filter: blur(40px);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-surface font-body selection:bg-secondary-container"
+  >
+    <!-- TopAppBar -->
+    <header
+      class="fixed top-0 w-full z-50 bg-[#fbf9f5]/70 dark:bg-stone-900/70 backdrop-blur-xl"
+    >
+      <nav
+        class="flex justify-between items-center px-8 py-4 max-w-full mx-auto"
+      >
+        <div
+          class="text-2xl font-serif font-bold text-[#154212] dark:text-[#cfe7bd]"
+        >
+          FreshScan
+        </div>
+        <div class="hidden md:flex items-center space-gap-8 gap-8">
+          <a
+            class="text-[#154212] font-bold border-b-2 border-[#735c00] pb-1"
+            href="#"
+            >Home</a
+          >
+          <a
+            class="text-stone-500 dark:text-stone-400 font-medium hover:text-[#154212] transition-all duration-300"
+            href="#"
+            >History</a
+          >
+        </div>
+        <div class="flex items-center gap-4">
+          <button
+            class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2 rounded-full text-sm font-bold transition-all duration-200 active:scale-95 shadow-lg"
+          >
+            Go Premium
+          </button>
+          <span
+            class="material-symbols-outlined text-[#154212] cursor-pointer hover:bg-stone-100/50 p-2 rounded-full transition-all"
+            >account_circle</span
+          >
+        </div>
+      </nav>
+    </header>
+    <main class="pt-24 pb-12 px-6 max-w-7xl mx-auto space-y-16">
+      <!-- Hero Section -->
+      <section
+        class="relative rounded-xl overflow-hidden min-h-[400px] flex items-center p-12"
+      >
+        <div
+          class="absolute inset-0 z-0 bg-gradient-to-tr from-surface-container via-surface-container-low to-secondary-container opacity-60"
+        ></div>
+        <div
+          class="absolute -right-20 -top-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
+        ></div>
+        <div
+          class="absolute -left-20 -bottom-20 w-80 h-80 bg-tertiary/10 rounded-full blur-3xl"
+        ></div>
+        <div class="relative z-10 max-w-2xl">
+          <h1
+            class="font-headline text-6xl md:text-7xl font-bold text-primary leading-tight"
+          >
+            FreshScan
+          </h1>
+          <p
+            class="mt-4 text-xl md:text-2xl text-on-surface-variant font-medium"
+          >
+            AI-powered fruit analysis &amp; freshness detection
+          </p>
+          <p class="mt-6 text-on-surface-variant/80 max-w-lg leading-relaxed">
+            Experience the future of organic selection. Our neural engine
+            identifies ripeness, nutritional density, and peak flavor with a
+            single scan.
+          </p>
+        </div>
+        <div
+          class="hidden lg:block absolute right-12 top-1/2 -translate-y-1/2 w-1/3 aspect-square rounded-xl overflow-hidden shadow-2xl rotate-3"
+        >
+          <img
+            class="w-full h-full object-cover"
+            data-alt="vibrant assortment of fresh tropical fruits including mangoes, berries, and citrus artistically arranged on a wooden surface with soft natural lighting"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa9r9AxgjrlAf0P_PU1Nvi1MTDO-d7xiNsNqhpaMlSYOgnctjrwlfOeiUqlimJMy8WxD3xxvTxMRfSTqXoR5tk-cOhixOHNLVOs7-dnsKikPxwJbi4U8qa8O2XTW6azux9elJlgnANEr8C27cJtrYceZ9Fml4mMP-jEkXA1CyzpG79H-I5eUvlwZ6R9rWI-635n24BCMg_LqfLw65m93enp1XQlIY5FqDzZIfbvtFdifsSGjaID8WYJgG3CHoC2l7YtbynCjhYwtE"
+          />
+        </div>
+      </section>
+      <!-- Analysis Engine (Two-Column Layout) -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <!-- Left Side: Upload & Input -->
+        <div class="lg:col-span-7 space-y-8">
+          <div class="bg-surface-container-low p-8 rounded-xl space-y-8">
+            <h2 class="font-headline text-3xl text-primary">
+              Capture Your Harvest
+            </h2>
+            <!-- Drag & Drop -->
+            <div id="uploadWrapper" class="w-full max-w-xl mx-auto">
+    
+    <div id="dropZone" class="group relative border-2 border-dashed border-outline-variant/30 hover:border-primary/40 rounded-xl bg-surface-container-lowest transition-all duration-300">
+        <input id="imageUpload" class="absolute inset-0 opacity-0 cursor-pointer z-10" type="file" accept="image/*" />
+        <div class="p-16 flex flex-col items-center text-center space-y-4">
+            <div class="w-16 h-16 rounded-full bg-secondary-container flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-3xl">add_a_photo</span>
+            </div>
+            <div>
+                <p class="text-lg font-bold text-on-surface">Drag and drop fruit image</p>
+                <p class="text-on-surface-variant/60">or click to browse library (PNG, JPG up to 10MB)</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="progressState" class="hidden p-16 border-2 border-outline-variant/30 rounded-xl bg-surface-container-lowest text-center space-y-4">
+        <p class="text-on-surface font-medium">Analyzing Harvest...</p>
+        <div class="w-full bg-secondary-container h-2 rounded-full overflow-hidden">
+            <div id="progressBar" class="bg-primary h-full w-0 transition-all duration-200"></div>
+        </div>
+    </div>
+
+    <div id="previewState" class="hidden relative group border-2 border-primary/20 rounded-xl overflow-hidden bg-surface-container-lowest">
+        <img id="imagePreview" src="" alt="Preview" class="w-full h-64 object-cover shadow-lg" />
+        
+        <button id="removeImage" class="absolute top-4 right-4 bg-error text-on-error p-2 rounded-full hover:scale-110 transition-transform shadow-md flex items-center justify-center">
+            <span class="material-symbols-outlined">delete</span>
+        </button>
+    </div>
+
+</div>
+            </div>
+            <!-- Fruit Selector Chips -->
+            <div class="space-y-4">
+              <label
+                class="text-sm font-bold uppercase tracking-widest text-on-surface-variant"
+                >Select Variety</label
+              >
+              <!-- fruit buttons started here -->
+              <div class="flex flex-wrap gap-3" id="fruit-options"> 
+                <button
+                  class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-on-primary shadow-lg scale-105 transition-all"
+                >
+                  <span class="material-symbols-outlined text-sm">ios</span>
+                  <span class="text-sm font-bold">Apple</span>
+                </button>
+                <button
+                  class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-surface-container-highest hover:bg-secondary-container transition-all"
+                >
+                  <span class="material-symbols-outlined text-sm">eco</span>
+                  <span class="text-sm font-bold">Banana</span>
+                </button>
+                <button
+                  class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-surface-container-highest hover:bg-secondary-container transition-all"
+                >
+                  <span class="material-symbols-outlined text-sm"
+                    >nutrition</span
+                  >
+                  <span class="text-sm font-bold">Mango</span>
+                </button>
+                <button
+                  class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-surface-container-highest hover:bg-secondary-container transition-all"
+                >
+                  <span class="material-symbols-outlined text-sm">circle</span>
+                  <span class="text-sm font-bold">Grape</span>
+                </button>
+                <button
+                  class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-surface-container-highest hover:bg-secondary-container transition-all"
+                >
+                  <span class="material-symbols-outlined text-sm"
+                    >more_horiz</span
+                  >
+                </button>
+              </div>
+            </div>
+            <button
+              id="analyze-btn"
+              class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-5 rounded-full font-bold text-lg shadow-xl hover:shadow-primary/20 hover:scale-[1.01] active:scale-[0.98] transition-all flex items-center justify-center gap-3"
+            >
+              <span class="material-symbols-outlined">analytics</span>
+              Analyze Freshness
+            </button>
+          </div>
+        </div>
+        <!-- Right Side: Result Card -->
+        <div
+          class="lg:col-span-5 opacity-0 scale-95 translate-y-4 pointer-events-none transition-all duration-700 ease-out"
+          id="result-card"
+        >
+          <div
+            class="bg-surface-container-lowest rounded-xl shadow-2xl p-8 sticky top-28 border border-outline-variant/10"
+          >
+            <div class="flex justify-between items-start">
+              <div>
+                <div class="flex items-center gap-2 text-secondary font-bold">
+                  <span
+                    class="material-symbols-outlined"
+                    style="font-variation-settings: &quot;FILL&quot; 1"
+                    >stars</span
+                  >
+                  AI SCAN COMPLETE
+                </div>
+                <h3 class="font-headline text-4xl mt-2">Organic Honeycrisp</h3>
+              </div>
+              <div
+                id="result-freshness"
+                class="bg-tertiary-fixed text-on-tertiary-fixed px-4 py-2 rounded-lg font-bold"
+              >
+                94% Fresh
+              </div>
+            </div>
+            <!-- Scan Ring Aesthetic -->
+            <div class="my-8 relative flex justify-center">
+              <div
+                class="w-48 h-48 rounded-full border-4 border-primary/20 flex items-center justify-center relative"
+              >
+                <div
+                  class="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-[spin_3s_linear_infinite]"
+                ></div>
+                <img
+                  id="result-fruit-image"
+                  class="w-40 h-40 rounded-full object-cover"
+                  data-alt="close-up of a perfectly ripe red apple with small water droplets on its skin against a soft cream background"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqIy8akP_9Z4JUh1BBnzhZKG8nkxC6oFZY3aCpQfNV4hO54rlbsnlhaP7Bw9GEVYAyw6_sD2FSmxAd8h8c4PN-jICR7QyhNmDKbLfQiHQ4NZknRQObhcDg2vtgo5aASPmFkSdPYS5owPRNHfAnhOWtlqmbJT3UESJqYjqeDNvHH9s18Y-zp-wTiqqplnomNofgrYtDvdC8aW2fak8Gyyz4qoreIbsZM03r0AWR6X3YQ4bkNxNn5-dCP3j0ehYFYLdOfZcutnN-e0s"
+                />
+              </div>
+            </div>
+            <div class="space-y-6">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="bg-surface-container-low p-4 rounded-xl">
+                  <p
+                    class="text-xs font-bold text-on-surface-variant/60 uppercase"
+                  >
+                    Count
+                  </p>
+                  <p class="text-2xl font-bold" id="result-count">0 Unit</p>
+                </div>
+                <div class="bg-surface-container-low p-4 rounded-xl">
+                  <p
+                    class="text-xs font-bold text-on-surface-variant/60 uppercase"
+                  >
+                    Calories
+                  </p>
+                  <p
+                    class="text-2xl font-bold text-tertiary"
+                    id="result-calories"
+                  >
+                    0 kcal
+                  </p>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <div class="flex justify-between text-sm font-bold">
+                  <span>Freshness Spectrum</span>
+                  <span class="text-primary">Near Perfect</span>
+                </div>
+                <div
+                  class="h-3 w-full bg-surface-container rounded-full overflow-hidden"
+                >
+                  <div
+                    class="h-full bg-gradient-to-r from-tertiary-container to-primary-container w-[94%] rounded-full"
+                  ></div>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-sm text-xs font-bold uppercase"
+                  >Firm</span
+                >
+                <span
+                  class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-sm text-xs font-bold uppercase"
+                  >Wax-Free</span
+                >
+                <span
+                  class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-sm text-xs font-bold uppercase"
+                  >Low-Acid</span
+                >
+              </div>
+              <div class="pt-6 border-t border-outline-variant/20">
+                <p
+                  class="text-sm font-bold text-primary flex items-center gap-2"
+                >
+                  <span class="material-symbols-outlined text-lg"
+                    >lightbulb</span
+                  >
+                  RECOMMENDATION
+                </p>
+                <p class="text-on-surface mt-2 leading-relaxed">
+                  This fruit is at its peak nutrient density.
+                  <strong>Eat now</strong> or refrigerate to preserve crispness
+                  for up to 5 days.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Recent Scans -->
+      <section class="space-y-8">
+        <div class="flex justify-between items-end">
+          <div>
+            <h2 class="font-headline text-3xl text-primary">Recent Scans</h2>
+            <p class="text-on-surface-variant">Your personal orchard history</p>
+          </div>
+          <button
+            class="text-primary font-bold hover:underline underline-offset-4 flex items-center gap-2"
+          >
+            View Library
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Scan Card 1 -->
+          <div
+            class="bg-surface p-6 rounded-xl shadow-sm border border-outline-variant/5 hover:shadow-lg transition-all group"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div
+                class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-2xl group-hover:scale-110 transition-transform"
+              >
+                🍌
+              </div>
+              <span
+                class="text-xs font-bold px-2 py-1 bg-error-container text-on-error-container rounded"
+                >Overripe</span
+              >
+            </div>
+            <h4 id="result-name" class="font-bold">Cavendish Banana</h4>
+            <p class="text-sm text-on-surface-variant mb-4">Scanned 2h ago</p>
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-primary">Freshness: 42%</span>
+              <span class="material-symbols-outlined text-on-surface-variant/40"
+                >chevron_right</span
+              >
+            </div>
+          </div>
+          <!-- Scan Card 2 -->
+          <div
+            class="bg-surface p-6 rounded-xl shadow-sm border border-outline-variant/5 hover:shadow-lg transition-all group"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div
+                class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-2xl group-hover:scale-110 transition-transform"
+              >
+                🥭
+              </div>
+              <span
+                class="text-xs font-bold px-2 py-1 bg-secondary-container text-on-secondary-container rounded"
+                >Acceptable</span
+              >
+            </div>
+            <h4 class="font-bold">Alphonso Mango</h4>
+            <p class="text-sm text-on-surface-variant mb-4">
+              Scanned yesterday
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-primary">Freshness: 78%</span>
+              <span class="material-symbols-outlined text-on-surface-variant/40"
+                >chevron_right</span
+              >
+            </div>
+          </div>
+          <!-- Scan Card 3 -->
+          <div
+            class="bg-surface p-6 rounded-xl shadow-sm border border-outline-variant/5 hover:shadow-lg transition-all group"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div
+                class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-2xl group-hover:scale-110 transition-transform"
+              >
+                🍎
+              </div>
+              <span
+                class="text-xs font-bold px-2 py-1 bg-secondary-container text-on-secondary-container rounded"
+                >Fresh</span
+              >
+            </div>
+            <h4 class="font-bold">Gala Apple</h4>
+            <p class="text-sm text-on-surface-variant mb-4">Scanned Oct 12</p>
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-primary">Freshness: 91%</span>
+              <span class="material-symbols-outlined text-on-surface-variant/40"
+                >chevron_right</span
+              >
+            </div>
+          </div>
+          <!-- Scan Card 4 -->
+          <div
+            class="bg-surface p-6 rounded-xl shadow-sm border border-outline-variant/5 hover:shadow-lg transition-all group"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div
+                class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-2xl group-hover:scale-110 transition-transform"
+              >
+                🍊
+              </div>
+              <span
+                class="text-xs font-bold px-2 py-1 bg-secondary-container text-on-secondary-container rounded"
+                >Fresh</span
+              >
+            </div>
+            <h4 class="font-bold">Clementine</h4>
+            <p class="text-sm text-on-surface-variant mb-4">Scanned Oct 10</p>
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-primary">Freshness: 88%</span>
+              <span class="material-symbols-outlined text-on-surface-variant/40"
+                >chevron_right</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Storage Tips Section -->
+      <section class="bg-surface-container p-12 rounded-xl">
+        <h2 class="font-headline text-3xl text-primary text-center mb-12">
+          Artisan Storage Guides
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div class="space-y-4 text-center px-4">
+            <div
+              class="w-16 h-16 bg-surface-container-lowest rounded-full flex items-center justify-center mx-auto shadow-md"
+            >
+              <span class="material-symbols-outlined text-tertiary"
+                >thermostat</span
+              >
+            </div>
+            <h3 class="font-bold text-lg">Temperature Zoning</h3>
+            <p class="text-on-surface-variant/80 text-sm leading-relaxed">
+              Berries thrive at 2°C, while citrus prefers the crisp drawer.
+              Separate your ethylene producers.
+            </p>
+          </div>
+          <div class="space-y-4 text-center px-4">
+            <div
+              class="w-16 h-16 bg-surface-container-lowest rounded-full flex items-center justify-center mx-auto shadow-md"
+            >
+              <span class="material-symbols-outlined text-tertiary">air</span>
+            </div>
+            <h3 class="font-bold text-lg">Air Circulation</h3>
+            <p class="text-on-surface-variant/80 text-sm leading-relaxed">
+              Never crowd your fruit bowl. Airflow is the natural enemy of mold
+              and premature decay.
+            </p>
+          </div>
+          <div class="space-y-4 text-center px-4">
+            <div
+              class="w-16 h-16 bg-surface-container-lowest rounded-full flex items-center justify-center mx-auto shadow-md"
+            >
+              <span class="material-symbols-outlined text-tertiary"
+                >opacity</span
+              >
+            </div>
+            <h3 class="font-bold text-lg">Hydration Control</h3>
+            <p class="text-on-surface-variant/80 text-sm leading-relaxed">
+              Wash fruit only right before consumption to prevent
+              moisture-induced spoilage.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer
+      class="bg-[#efeeea] dark:bg-stone-950 w-full py-12 px-8 border-t border-stone-200/20"
+    >
+      <div
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
+      >
+        <div>
+          <div class="font-serif italic text-lg text-[#2d5a27] mb-2">
+            FreshScan
+          </div>
+          <p class="font-sans text-sm tracking-wide uppercase text-stone-400">
+            © 2024 FreshScan. The Digital Orchard.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-6 md:justify-end">
+          <a
+            class="font-sans text-sm tracking-wide uppercase text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-opacity"
+            href="#"
+            >Storage Tips</a
+          >
+          <a
+            class="font-sans text-sm tracking-wide uppercase text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-opacity"
+            href="#"
+            >Sustainability</a
+          >
+          <a
+            class="font-sans text-sm tracking-wide uppercase text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-opacity"
+            href="#"
+            >Privacy</a
+          >
+          <a
+            class="font-sans text-sm tracking-wide uppercase text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-opacity"
+            href="#"
+            >Support</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
