@@ -27,7 +27,7 @@ pip install -r requirements.txt
 Bash
 python app.py
 Once running, open your browser and navigate to: http://127.0.0.1:5000
-
+---
 🛠️ Project Structure
 To ensure the code runs correctly, maintain the following directory layout:
 
