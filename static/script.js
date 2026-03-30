@@ -124,10 +124,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Button click
   analyzeBtn.addEventListener("click", async () => {
+    
     if (fileInput.files.length === 0) {
       alert("Please select a fruit image first!");
       return;
     }
+    // let freeze the button ohk
+    analyzeBtn.disabled = true;
+    analyzeBtn.classList.add("opacity-50", "cursor-not-allowed"); // Optional: visual feedback
+
 
     // Loading state
     const originalText = analyzeBtn.innerHTML;
@@ -190,6 +195,8 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Failed to connect to the neural engine.");
     } finally {
       analyzeBtn.innerHTML = originalText;
+      analyzeBtn.disabled = false;
+    analyzeBtn.classList.remove("opacity-50", "cursor-not-allowed"); // Optional: visual feedback
     }
   });
 });
