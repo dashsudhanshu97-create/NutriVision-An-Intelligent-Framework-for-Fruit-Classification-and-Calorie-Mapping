@@ -5,26 +5,38 @@ NutriVision is an intelligent Computer Vision application that identifies fruits
 🚀 Quick Start: Installation & Setup
 Follow these steps to get the project running on your local machine.
 
-1. Clone the Repository
+1. Clone the Repository and change the director 
   
 2. Set Up a Virtual Environment
 Windows:
+  python -m venv venv
+
+3. Activate the Virtual Environment
+  Windows:
+  .\venv\Scripts\activate
+
+4. Install all the dependencies
+  pip install -r requirements.txt
   
-python -m venv venv
-.\venv\Scripts\activate
+5. Run the Flask server
+  python app.py
+
+  
   
 Ubuntu/Linux:
 
-Bash
-sudo apt update && sudo apt install python3-venv libgl1 -y
+1. Create the Virtual Env
 python3 -m venv venv
+
+2.Activate the Virtaul Env
 source venv/bin/activate
+
 3. Install Dependencies
-Bash
 pip install -r requirements.txt
+
 4. Run the Application
-Bash
 python app.py
+  
 Once running, open your browser and navigate to: http://127.0.0.1:5000
 ---
 🛠️ Project Structure
